@@ -42,7 +42,7 @@
 #include "wrl/Shape.hpp"
 // #include "wrl/Appearance.hpp"
 // #include "wrl/Material.hpp"
-// #include "core/Faces.hpp"
+#include "core/Faces.hpp"
 
 const char* SaverStl::_ext = "stl";
 SaverStl::FileType SaverStl::_fileType = SaverStl::FileType::ASCII;
@@ -69,13 +69,30 @@ bool SaverStl::_saveAscii
     
   int iF,iV0,iV1,iV2,iN;
   float x0,x1,x2,n0,n1,n2;
+
+  int nV = coord.size()/3;
+  Faces* faces = new Faces(nV, coordIndex);
+
   for(iF=0;iF<nF;iF++) { // for each face ...
 
     // TODO
     // use fprintf() to print formatted text
+    fprintf(fp, "facet normal %f %f %f\n", normal[iF*3], normal[iF*3+1], normal[iF*3+2]);
+    fprintf(fp, "  outer loop\n");
+    int faceSize = faces->getFaceSize(iF);
+    int iC = faces->getFaceFirstCorner(iF);
+    int i=0;
+    do{
+        int iV = coordIndex[iC];
+        fprintf(fp, "    vertex %f %f %f\n", coord[3*iV], coord[3*iV+1], coord[3*iV+2]);
+        iC = faces->getNextCorner(iC);
+        i++;
+    } while(i<faceSize);
+    fprintf(fp, "  endloop\n");
+    fprintf(fp, "endfacet\n");
 
   }
-
+  delete faces;
   return true;
 }
 
@@ -219,6 +236,12 @@ bool SaverStl::save(const char* filename, SceneGraph& wrl) const {
     } else {
       // otherwise use filename, but first remove directory and extension
       // TODO
+      string rawFilename = string(filename);
+      int extIndex = rawFilename.find_last_of('.');
+      int dirIndex = rawFilename.find_last_of('/');
+      rawFilename = (rawFilename.erase(extIndex)).erase(0,dirIndex+1);
+      snprintf(solidname, 256, "%s",rawFilename.c_str());
+
     }
 
     if(_fileType==SaverStl::FileType::ASCII) { ///////////////////////

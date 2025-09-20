@@ -90,6 +90,9 @@ public:
 private:
 
   // TODO
+    int _nV; //Cantidad de vértices pasada al constructor
+    vector<int> _coordIndex; //Vector coordIndex pasado al constructor
+    vector<int> _faceIndex; //Vector de índices de las caras en el coordIndex, para acceso eficiente
 
 };
 

@@ -34,6 +34,8 @@
 
 #include "dgpPrt.hpp"
 
+#include "core/faces.hpp"
+
 const char* tv(bool value) { return (value)?"true":"false"; }
 
 void printIndexedFaceSetInfo
@@ -55,6 +57,27 @@ void printIndexedFaceSetInfo
   ostr << indent << "IndexedFaceSet[" << iIfs << "] {" << endl;
 
   // TODO
+  
+  int nV = ifs->getNumberOfVertices();
+  
+  int nF = ifs->getNumberOfFaces();
+  
+  isTriangleMesh = ifs->isTriangleMesh();
+  
+  string colorBinding = ifs->stringBinding(ifs->getColorBinding());
+  
+  string normalBinding = ifs->stringBinding(ifs->getNormalBinding());
+  
+  string texCoordBinding = ifs->stringBinding(ifs->getTexCoordBinding());
+  
+  ostr << indent << "  shapeName        = \"" << shapeName << "\"" << endl;
+  ostr << indent << "  numberOfVertices = " << nV << endl;
+  ostr << indent << "  numberOfFaces    = " << nF << endl;
+  ostr << indent << "  isTriangleMesh   = " << isTriangleMesh << endl;
+  ostr << indent << "  colorBinding     = " << colorBinding << endl;
+  ostr << indent << "  normalBinding    = " << colorBinding << endl;
+  ostr << indent << "  texCoordBinding  = " << colorBinding << endl;
 
   ostr << indent << "}" << endl;
+
 }
