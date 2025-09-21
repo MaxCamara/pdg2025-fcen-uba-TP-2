@@ -343,7 +343,7 @@ int HalfEdges::getTwin(const int iC) const {
 
 int HalfEdges::getNumberOfEdgeHalfEdges(const int iE) const {
   // TODO
-  if(iE < 0 || iE >= getNumberOfEdges()) return -1;
+  if(iE < 0 || iE >= getNumberOfEdges()) return 0;
   return (_firstCornerEdge[iE+1] - _firstCornerEdge[iE]);
 }
 
