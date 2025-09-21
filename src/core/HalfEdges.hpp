@@ -67,7 +67,7 @@ public:
 
   // returns the number of elements of the coordIndex array
 
-  int     getNumberOfCorners();
+  int     getNumberOfCorners() const; //Hago a la función const para que pueda ser usada por las otras funciones, sabiendo que no modifica el half-edge
 
   // returns the index of the face containing the half edge
   // corresponding to the corner index iC; if the corner index is out
