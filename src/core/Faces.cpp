@@ -36,7 +36,7 @@
 
 #include <math.h>
 #include "Faces.hpp"
-#include "StrException.hpp"
+#include "io/StrException.hpp"
   
 Faces::Faces(const int nV, const vector<int>& coordIndex) {
   try{
@@ -154,7 +154,7 @@ int Faces::getCornerFace(const int iC) const {
       if(_coordIndex[iC] >= 0){
           int i = iC+1;
           while(_coordIndex[i] >= 0){i++;}
-          result = -_coordIndex[iC] - 1;
+          result = -_coordIndex[i] - 1;
       }
 
   } catch(StrException* e) { 

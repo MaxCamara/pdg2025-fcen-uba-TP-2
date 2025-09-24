@@ -34,7 +34,7 @@
 
 #include "dgpPrt.hpp"
 
-#include "core/faces.hpp"
+#include "core/Faces.hpp"
 
 const char* tv(bool value) { return (value)?"true":"false"; }
 
@@ -58,22 +58,28 @@ void printIndexedFaceSetInfo
 
   // TODO
   
-  int nV = ifs->getNumberOfVertices();
+  int nV = ifs.getNumberOfVertices();
   
-  int nF = ifs->getNumberOfFaces();
+  int nF = ifs.getNumberOfFaces();
   
-  isTriangleMesh = ifs->isTriangleMesh();
+  bool isTriangleMesh = ifs.isTriangleMesh();
+  string isTriangleMeshString;
+  if (isTriangleMesh) {
+      isTriangleMeshString = "true";
+  } else {
+      isTriangleMeshString = "false";
+  }
   
-  string colorBinding = ifs->stringBinding(ifs->getColorBinding());
+  string colorBinding = ifs.stringBinding(ifs.getColorBinding());
   
-  string normalBinding = ifs->stringBinding(ifs->getNormalBinding());
+  string normalBinding = ifs.stringBinding(ifs.getNormalBinding());
   
-  string texCoordBinding = ifs->stringBinding(ifs->getTexCoordBinding());
+  string texCoordBinding = ifs.stringBinding(ifs.getTexCoordBinding());
   
   ostr << indent << "  shapeName        = \"" << shapeName << "\"" << endl;
   ostr << indent << "  numberOfVertices = " << nV << endl;
   ostr << indent << "  numberOfFaces    = " << nF << endl;
-  ostr << indent << "  isTriangleMesh   = " << isTriangleMesh << endl;
+  ostr << indent << "  isTriangleMesh   = " << isTriangleMeshString << endl;
   ostr << indent << "  colorBinding     = " << colorBinding << endl;
   ostr << indent << "  normalBinding    = " << colorBinding << endl;
   ostr << indent << "  texCoordBinding  = " << colorBinding << endl;

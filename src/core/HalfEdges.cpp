@@ -44,7 +44,7 @@
 #include <math.h>
 #include "HalfEdges.hpp"
 #include "Graph.hpp"
-#include "StrException.hpp"
+#include "io/StrException.hpp"
 
 // 1) all half edges corresponding to regular mesh edges are made twins
 // 2) all the other edges are made boundary half edges (twin==-1)
