@@ -81,8 +81,8 @@ void printIndexedFaceSetInfo
   ostr << indent << "  numberOfFaces    = " << nF << endl;
   ostr << indent << "  isTriangleMesh   = " << isTriangleMeshString << endl;
   ostr << indent << "  colorBinding     = " << colorBinding << endl;
-  ostr << indent << "  normalBinding    = " << colorBinding << endl;
-  ostr << indent << "  texCoordBinding  = " << colorBinding << endl;
+  ostr << indent << "  normalBinding    = " << normalBinding << endl;
+  ostr << indent << "  texCoordBinding  = " << texCoordBinding << endl;
 
   ostr << indent << "}" << endl;
 
