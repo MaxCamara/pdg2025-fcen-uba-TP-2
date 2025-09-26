@@ -90,8 +90,8 @@ bool SaverStl::_saveAscii
     } while(i<faceSize);
     fprintf(fp, "  endloop\n");
     fprintf(fp, "endfacet\n");
-
   }
+  fprintf(fp,"endsolid %s\n",solidname);
   delete faces;
   return true;
 }

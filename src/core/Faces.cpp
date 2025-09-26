@@ -144,19 +144,11 @@ int Faces::getCornerFace(const int iC) const {
       if(iC < 0 || iC >= getNumberOfCorners()){
           throw new StrException("Índice de esquina incorrecto");
       }
-      // if(_coordIndex[iC] != -1){
-      //     int candidateFace = getNumberOfFaces()-1; //El primer candidato es la última cara
-      //     while(getFaceFirstCorner(candidateFace) > iC){
-      //         candidateFace--;                      //Recorro las caras desde la última hasta encontrar la primera que empiece antes
-      //     }
-      //     result = candidateFace;
-      // }
       if(_coordIndex[iC] >= 0){
           int i = iC+1;
           while(_coordIndex[i] >= 0){i++;}
           result = -_coordIndex[i] - 1;
       }
-
   } catch(StrException* e) { 
       fprintf(stderr,"Faces | ERROR | %s\n",e->what());
       delete e;

@@ -220,6 +220,30 @@ int main(int argc, char **argv) {
 
       // TODO ...
 
+      if (D._removeNormal) {
+        vector<float>& normal = ifs->getNormal();
+        normal.clear();
+        vector<int>& normalIndex = ifs->getNormalIndex();
+        normalIndex.clear();
+        ifs->setNormalPerVertex(false);
+      }
+
+      if (D._removeColor) {
+        vector<float>& color = ifs->getColor();
+        color.clear();
+        vector<int> colorIndex = ifs->getColorIndex();
+        colorIndex.clear();
+        ifs->setColorPerVertex(false);
+      }
+
+      if (D._removeTexCoord) {
+        vector<float>& texCoord = ifs->getTexCoord();
+        texCoord.clear();
+        vector<int>& texCoordIndex = ifs->getTexCoordIndex();
+        texCoordIndex.clear();
+      }
+
+
       if(D._debug) {
         cout << "  after processing" << endl;
         printIndexedFaceSetInfo(cout, shapeName, iIfs,*ifs,"    ");
