@@ -82,14 +82,14 @@ PolygonMesh::PolygonMesh(const int nVertices, const vector<int>& coordIndex):
       if(nIncidentFaces == 2){      //La arista es regular sii tiene dos caras incidentes
           int C0 = getEdgeHalfEdge(iE, 0);
           int C1 = getEdgeHalfEdge(iE, 1);
-          if(coordIndex[C0] == coordIndex[getDst(C1)]){
+          if(coordIndex[C0] == coordIndex[getNext(C1)]){
               // Las esquinas incidentes a iE, C0 y C1, estan consistentemente orientadas
-              partition.join(C0, getDst(C1));
-              partition.join(C1, getDst(C0));
+              partition.join(C0, getNext(C1));
+              partition.join(C1, getNext(C0));
           } else {
               //Las esquinas incidentes a iE, c0 y c1, no están consistentemente orientadas
               partition.join(C0, C1);
-              partition.join(getDst(C0), getDst(C1));
+              partition.join(getNext(C0), getNext(C1));
           }
 
       }
@@ -212,7 +212,7 @@ bool PolygonMesh::isRegular() const {
   int nE = getNumberOfEdges();
   int nV = getNumberOfVertices();
   for(int iE=0; iE<nE; iE++){
-      if(!isRegularEdge(iE)){
+      if(isSingularEdge(iE)){
           result = false;
           break;
       }

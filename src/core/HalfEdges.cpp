@@ -163,6 +163,10 @@ HalfEdges::HalfEdges(const int nVertices, const vector<int>&  coordIndex):
   //   otherwise save the value stored in twinCorner[iE] in _twin[iC]
   //   and iC in _twin[_twin[iC]]
 
+  for(int i=0; i<nC; i++){
+      _twin.push_back(-1);
+  }
+
   int iVsrc;
   int iVdst;
   for(iC0=iC1=0;iC1<nC;iC1++) {
@@ -285,21 +289,14 @@ int HalfEdges::getFace(const int iC) const {
 int HalfEdges::getSrc(const int iC) const {
   // TODO
   if(iC < 0 || iC >= getNumberOfCorners() || _coordIndex[iC] == -1) return -1;
-  return iC; //La esquina fuente de un half-edge se corresponde con la esquina que lo identifica
+  return _coordIndex[iC];
 }
 
 // half-edge method dstVertex()
 int HalfEdges::getDst(const int iC) const {
   // TODO
   if(iC < 0 || iC >= getNumberOfCorners() || _coordIndex[iC] == -1) return -1;
-  int dst = -1;
-  if(_coordIndex[iC+1]>=0){
-      dst = _coordIndex[iC+1];
-  } else {
-      int faceSize = -(_twin[iC+1]);
-      dst = _coordIndex[iC - faceSize + 1];
-  }
-  return dst;
+  return _coordIndex[getNext(iC)];
 }
 
 // half-edge method next()
@@ -307,8 +304,15 @@ int HalfEdges::getNext(const int iC) const {
   // TODO
   // if iC is the last corner of its face, use the face size
   // stored in _twin[iC+1] to locate the first corner of the face
-  return getDst(iC); //Siguiendo esta implementación, getDst y getNext son equivalentes, ya que la esquina destino de un half-edge
-                     //se corresponde con la esquina que identifica al siguiente half-edge en la cara.
+  if(iC < 0 || iC >= getNumberOfCorners() || _coordIndex[iC] == -1) return -1;
+  int next;
+  if(_coordIndex[iC+1]>=0){
+      next = iC+1;
+  } else {
+      int faceSize = -(_twin[iC+1]);
+      next = iC - faceSize + 1;
+  }
+  return next;
 }
 
 // half-edge method prev()
@@ -350,6 +354,7 @@ int HalfEdges::getNumberOfEdgeHalfEdges(const int iE) const {
 int HalfEdges::getEdgeHalfEdge(const int iE, const int j) const {
   // TODO
   if(iE < 0 || iE >= getNumberOfEdges()) return -1;
-  if(_firstCornerEdge[iE]+j >= _firstCornerEdge[iE+1]) return -1; //Si la arista iE no tiene j half-edges incidentes
-  return _firstCornerEdge[iE]+j;
+  int targetIndex = _firstCornerEdge[iE]+j;
+  if(targetIndex >= _firstCornerEdge[iE+1]) return -1; //Si la arista iE no tiene j half-edges incidentes, devuelvo -1
+  return _cornerEdge[targetIndex];
 }

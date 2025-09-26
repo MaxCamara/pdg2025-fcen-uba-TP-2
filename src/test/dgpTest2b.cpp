@@ -225,7 +225,7 @@ int main(int argc, char **argv) {
         normal.clear();
         vector<int>& normalIndex = ifs->getNormalIndex();
         normalIndex.clear();
-        ifs->setNormalPerVertex(false);
+        ifs->setNormalPerVertex(true);
       }
 
       if (D._removeColor) {
@@ -233,7 +233,7 @@ int main(int argc, char **argv) {
         color.clear();
         vector<int> colorIndex = ifs->getColorIndex();
         colorIndex.clear();
-        ifs->setColorPerVertex(false);
+        ifs->setColorPerVertex(true);
       }
 
       if (D._removeTexCoord) {
